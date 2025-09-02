@@ -310,43 +310,43 @@ static void web_status_json(char **status_string_ptr, longmynd_status_t *status,
     pthread_mutex_unlock(&status->mutex);
 
     json_object_object_add(statusObj, "type", json_object_new_string("status"));
-    json_object_object_add(statusObj, "timestamp", json_object_new_double(((double)timestamp_ms())/1000));
+    json_object_object_add(statusObj, "timestamp", json_object_new_int64(timestamp_ms()/1000));
 
     /* Receiver */
 
-    json_object_object_add(statusPacketRxObj, "rfport", json_object_new_double((double)status_cache->rfport_index));
+    json_object_object_add(statusPacketRxObj, "rfport", json_object_new_int(status_cache->rfport_index));
 
-    json_object_object_add(statusPacketRxObj, "demod_state", json_object_new_double((double)status_cache->state));
+    json_object_object_add(statusPacketRxObj, "demod_state", json_object_new_int(status_cache->state));
 
-    json_object_object_add(statusPacketRxObj, "lna", json_object_new_double((double)status_cache->lna_gain));
+    json_object_object_add(statusPacketRxObj, "lna", json_object_new_int(status_cache->lna_gain));
 
-    json_object_object_add(statusPacketRxObj, "agc1", json_object_new_double((double)status_cache->agc1_gain));
+    json_object_object_add(statusPacketRxObj, "agc1", json_object_new_int(status_cache->agc1_gain));
 
-    json_object_object_add(statusPacketRxObj, "agc2", json_object_new_double((double)status_cache->agc2_gain));
+    json_object_object_add(statusPacketRxObj, "agc2", json_object_new_int(status_cache->agc2_gain));
 
-    json_object_object_add(statusPacketRxObj, "frequency", json_object_new_double((double)(status_cache->frequency_requested+(status->frequency_offset/1000))));
+    json_object_object_add(statusPacketRxObj, "frequency", json_object_new_int(status_cache->frequency_requested+(status->frequency_offset/1000)));
 
     json_object_object_add(statusPacketRxObj, "lnb_voltage_enabled", json_object_new_boolean(status_cache->polarisation_supply));
 
     json_object_object_add(statusPacketRxObj, "lnb_voltage_polarisation_h", json_object_new_boolean(status_cache->polarisation_horizontal));
 
-    json_object_object_add(statusPacketRxObj, "symbolrate", json_object_new_double((double)status_cache->symbolrate));
+    json_object_object_add(statusPacketRxObj, "symbolrate", json_object_new_int(status_cache->symbolrate));
 
-    json_object_object_add(statusPacketRxObj, "vber", json_object_new_double((double)status_cache->viterbi_error_rate));
+    json_object_object_add(statusPacketRxObj, "vber", json_object_new_int(status_cache->viterbi_error_rate));
 
-    json_object_object_add(statusPacketRxObj, "ber", json_object_new_double((double)status_cache->bit_error_rate));
+    json_object_object_add(statusPacketRxObj, "ber", json_object_new_int(status_cache->bit_error_rate));
 
-    json_object_object_add(statusPacketRxObj, "errors_bch_uncorrected", json_object_new_double((double)status_cache->errors_bch_uncorrected));
+    json_object_object_add(statusPacketRxObj, "errors_bch_uncorrected", json_object_new_int(status_cache->errors_bch_uncorrected));
 
-    json_object_object_add(statusPacketRxObj, "errors_bch_count", json_object_new_double((double)status_cache->errors_bch_count));
+    json_object_object_add(statusPacketRxObj, "errors_bch_count", json_object_new_int(status_cache->errors_bch_count));
 
-    json_object_object_add(statusPacketRxObj, "errors_ldpc_count", json_object_new_double((double)status_cache->errors_ldpc_count));
+    json_object_object_add(statusPacketRxObj, "errors_ldpc_count", json_object_new_int(status_cache->errors_ldpc_count));
 
-    json_object_object_add(statusPacketRxObj, "ber", json_object_new_double((double)status_cache->bit_error_rate));
+    json_object_object_add(statusPacketRxObj, "ber", json_object_new_int(status_cache->bit_error_rate));
 
-    json_object_object_add(statusPacketRxObj, "mer", json_object_new_double((double)status_cache->modulation_error_rate));
+    json_object_object_add(statusPacketRxObj, "mer", json_object_new_int(status_cache->modulation_error_rate));
 
-    json_object_object_add(statusPacketRxObj, "modcod", json_object_new_double((double)status_cache->modcod));
+    json_object_object_add(statusPacketRxObj, "modcod", json_object_new_int(status_cache->modcod));
 
     json_object_object_add(statusPacketRxObj, "short_frame", json_object_new_boolean(status_cache->short_frame));
 
@@ -359,7 +359,7 @@ static void web_status_json(char **status_string_ptr, longmynd_status_t *status,
     
     json_object_object_add(statusPacketRxObj, "ts_ip_addr", json_object_new_string(status_cache->ts_ip_addr));
     
-    json_object_object_add(statusPacketRxObj, "ts_ip_port", json_object_new_double((double)(status_cache->ts_ip_port)));
+    json_object_object_add(statusPacketRxObj, "ts_ip_port", json_object_new_int(status_cache->ts_ip_port));
 
 
     json_object *constellationArray = json_object_new_array();
@@ -368,8 +368,8 @@ static void web_status_json(char **status_string_ptr, longmynd_status_t *status,
     {
         /* Create point [x,y] */
         constellationPoint = json_object_new_array();
-        json_object_array_add(constellationPoint, json_object_new_double(status_cache->constellation[j][0]));
-        json_object_array_add(constellationPoint, json_object_new_double(status_cache->constellation[j][1]));
+        json_object_array_add(constellationPoint, json_object_new_int(status_cache->constellation[j][0]));
+        json_object_array_add(constellationPoint, json_object_new_int(status_cache->constellation[j][1]));
         /* Add to array [[x,y],[x,y]] */
         json_object_array_add(constellationArray, constellationPoint);
     }
@@ -383,7 +383,7 @@ static void web_status_json(char **status_string_ptr, longmynd_status_t *status,
 
     json_object_object_add(statusPacketTsObj, "service_provider_name", json_object_new_string(status_cache->service_provider_name));
 
-    json_object_object_add(statusPacketTsObj, "null_ratio", json_object_new_double((double)status_cache->ts_null_percentage));
+    json_object_object_add(statusPacketTsObj, "null_ratio", json_object_new_int(status_cache->ts_null_percentage));
 
     json_object *elementaryPIDsArray = json_object_new_array();
     json_object *elementaryPID;
@@ -391,8 +391,8 @@ static void web_status_json(char **status_string_ptr, longmynd_status_t *status,
         if(status_cache->ts_elementary_streams[j][0] > 0)
         {
             elementaryPID = json_object_new_array();
-            json_object_array_add(elementaryPID, json_object_new_double(status_cache->ts_elementary_streams[j][0]));
-            json_object_array_add(elementaryPID, json_object_new_double(status_cache->ts_elementary_streams[j][1]));
+            json_object_array_add(elementaryPID, json_object_new_int(status_cache->ts_elementary_streams[j][0]));
+            json_object_array_add(elementaryPID, json_object_new_int(status_cache->ts_elementary_streams[j][1]));
             /* Add to array [[x,y],[x,y]] */
             json_object_array_add(elementaryPIDsArray, elementaryPID);
         }
